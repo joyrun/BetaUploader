@@ -4,7 +4,7 @@
 
 
 ```
-基于腾讯Bugly内测分发，增加了上传apk到又拍云的功能
+打包上传apk到七牛云
 ```
 
 在根目录下的build.gralde文件的depandencies（buildscript部分）中添加：
