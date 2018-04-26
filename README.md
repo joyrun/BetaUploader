@@ -1,5 +1,8 @@
 # Beta Gradle插件使用说明
 
+[![](https://jitpack.io/v/joyrun/BetaUploader.svg)](https://jitpack.io/#joyrun/BetaUploader)
+
+
 ```
 基于腾讯Bugly内测分发，增加了上传apk到又拍云的功能
 ```

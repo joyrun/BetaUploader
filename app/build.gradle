@@ -34,7 +34,7 @@ beta {
 
     debugOn = true
 
-    webhook = "http://beta.thejoyrun.com"
+    webhook = ""
 }
 
 android {
