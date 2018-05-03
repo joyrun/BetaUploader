@@ -10,32 +10,33 @@ buildscript {
         maven { url "https://jitpack.io" }
     }
     dependencies {
-//        classpath 'com.github.joyrun:BetaUploader:1.3.1'
+        classpath 'com.github.joyrun:BetaUploader:1.3.2'
     }
 }
 
 
 apply plugin: 'com.android.application'
 apply plugin: 'groovyx.grooid.groovy-android'
-//apply plugin: 'com.beta.plugin.betauploader' // 应用上传apk插件
+apply plugin: 'com.beta.plugin.betauploader' // 应用上传apk插件
 
 // beta配置
-//beta {
-//    secret = 2
-//    desc = '我是描述'
-//    title = "测试版"
-//
-//
-//    qiniuAccessKey = ""
-//    qiniuSecretKey = ""
-//    qiniuBucketName = ""
-//    qiniuUploadFileName = "android-" + System.currentTimeMillis()+".apk"
-//    qiniuBaseUrl = ""
-//
-//    debugOn = true
-//
-//    webhook = ""
-//}
+beta {
+    secret = 2
+    desc = '我是描述' +
+            '\nfasdfa'
+    title = "测试版"
+
+
+    qiniuAccessKey = "p1zX5P2w4FtGgf86-BKVRGW5S0yNB0D6S-XDnByQ"
+    qiniuSecretKey = "J2mcgj5kWHm7ReVEeQYeOfhxhF-hIUXPXX8nkTAY"
+    qiniuBucketName = "joyrun-beta-app"
+    qiniuUploadFileName = "android-" + System.currentTimeMillis()+".apk"
+    qiniuBaseUrl = "http://p7saoyujs.bkt.clouddn.com"
+
+    debugOn = true
+
+    webhook = "http://beta.thejoyrun.com"
+}
 
 android {
     compileSdkVersion 27

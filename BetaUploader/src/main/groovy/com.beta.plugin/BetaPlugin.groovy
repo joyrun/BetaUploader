@@ -166,9 +166,10 @@ public class BetaPlugin implements Plugin<Project> {
         Auth auth = Auth.create(accessKey, secretKey);
         String token = auth.uploadToken(bucketName);
         Response response = uploadManager.put(filePath, uploadFileName, token);
+        uploadInfo.downloadUrl = uploadInfo.project.beta.qiniuBaseUrl + "/" + uploadFileName
         println "uploadFileName: " + response.toString()
         println "upload result: " + response.bodyString()
-        println "apk download url: " + uploadInfo.project.beta.qiniuBaseUrl + "/" + uploadFileName
+        println "apk download url: " + uploadInfo.downloadUrl
 
         if (response.statusCode == 200) {
             // 调用webhook，告知已经更新版本
@@ -179,9 +180,10 @@ public class BetaPlugin implements Plugin<Project> {
             String versionName = URLEncoder.encode(uploadInfo.versionName,"utf-8")
             String versionCode = URLEncoder.encode(uploadInfo.versionCode,"utf-8")
             String extra = URLEncoder.encode(uploadInfo.extra,"utf-8")
+            String downloadUrlUTF8 = URLEncoder.encode(uploadInfo.downloadUrl,"utf-8")
 
             OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
-            String url = String.format("%s?title=%s&description=%s&versionName=%s&versionCode=%s&extra=%s",uploadInfo.project.beta.webhook,title,description,versionName,versionCode,extra)
+            String url = String.format("%s?title=%s&description=%s&versionName=%s&versionCode=%s&extra=%s&downloadUrl=%s",uploadInfo.project.beta.webhook,title,description,versionName,versionCode,extra,downloadUrlUTF8)
             Request.Builder builder = new Request.Builder().url(url).get();
             println "webhook info: " + uploadInfo.toString()
             println "webhook start: " + url
@@ -200,6 +202,7 @@ public class BetaPlugin implements Plugin<Project> {
         public String sourceFile = null
         public String title = null
         public String description = null
+        public String downloadUrl = null
 
         public String versionName = null
         public String versionCode = null
