@@ -30,7 +30,14 @@ allprojects {
         }
     }
 }
+project.ext {
+    QINIU_ACCESS_KEY = "xxx"
+    QINIU_SECRET_KEY = "xxx"
+    QINIU_BUCKET_NAME = "xxx"
+    QINIU_BASE_URL = "http://xxx.bkt.clouddn.com"
+    WEBHOOK = "http://localhost:8080/uploadBeta"
 
+}
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
