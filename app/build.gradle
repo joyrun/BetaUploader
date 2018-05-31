@@ -26,15 +26,15 @@ beta {
     title = "悦跑圈_正式版"
 
 
-    qiniuAccessKey = ""
-    qiniuSecretKey = ""
-    qiniuBucketName = ""
+    qiniuAccessKey = QINIU_ACCESS_KEY
+    qiniuSecretKey = QINIU_SECRET_KEY
+    qiniuBucketName = QINIU_BUCKET_NAME
     qiniuUploadFileName = "android-" + System.currentTimeMillis()+".apk"
-    qiniuBaseUrl = ""
+    qiniuBaseUrl = QINIU_BASE_URL
 
     debugOn = true
 
-    webhook = ""
+    webhook = WEBHOOK
 }
 
 android {
