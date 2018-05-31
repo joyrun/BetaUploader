@@ -1,0 +1,70 @@
+buildscript {
+    repositories {
+        jcenter()
+//        maven {
+//            url 'https://jalenchen.bintray.com/maven/'
+//        }
+        maven {
+            url uri('../repo')
+        }
+        maven { url "https://jitpack.io" }
+    }
+    dependencies {
+        classpath 'com.github.joyrun:BetaUploader:1.3.2'
+    }
+}
+
+
+apply plugin: 'com.android.application'
+apply plugin: 'groovyx.grooid.groovy-android'
+apply plugin: 'com.beta.plugin.betauploader' // 应用上传apk插件
+
+// beta配置
+beta {
+    secret = 2
+    desc = '我是描述' +
+            '\nfasdfa'
+    title = "悦跑圈_正式版"
+
+
+    qiniuAccessKey = QINIU_ACCESS_KEY
+    qiniuSecretKey = QINIU_SECRET_KEY
+    qiniuBucketName = QINIU_BUCKET_NAME
+    qiniuUploadFileName = "android-" + System.currentTimeMillis()+".apk"
+    qiniuBaseUrl = QINIU_BASE_URL
+
+    debugOn = true
+
+    webhook = WEBHOOK
+}
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
+
+    defaultConfig {
+        applicationId "com.devilwwj.plugintest"
+        minSdkVersion 14
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+    }
+
+
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+}
