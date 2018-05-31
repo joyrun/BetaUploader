@@ -22,16 +22,15 @@ apply plugin: 'com.beta.plugin.betauploader' // 应用上传apk插件
 // beta配置
 beta {
     secret = 2
-    desc = '我是描述' +
-            '\nfasdfa'
+    desc = ''
     title = "悦跑圈_正式版"
 
 
-    qiniuAccessKey = QINIU_ACCESS_KEY
-    qiniuSecretKey = QINIU_SECRET_KEY
-    qiniuBucketName = QINIU_BUCKET_NAME
+    qiniuAccessKey = ""
+    qiniuSecretKey = ""
+    qiniuBucketName = ""
     qiniuUploadFileName = "android-" + System.currentTimeMillis()+".apk"
-    qiniuBaseUrl = QINIU_BASE_URL
+    qiniuBaseUrl = ""
 
     debugOn = true
 
