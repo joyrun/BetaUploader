@@ -34,7 +34,7 @@ beta {
 
     debugOn = true
 
-    webhook = WEBHOOK
+    webhook = ""
 }
 
 android {
