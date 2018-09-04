@@ -168,7 +168,7 @@ public class BetaPlugin implements Plugin<Project> {
         String versionName = URLEncoder.encode(uploadInfo.versionName,"utf-8")
 
         String path = uploadInfo.project.beta.upyunPath+"/"+uploadInfo.project.beta.uploadName+"_"+versionName+"_"+new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date())+".apk";
-        boolean result = upyun.writeFile(path,filePath,true);
+        boolean result = upyun.writeFile(path,new File(filePath),true);
         uploadInfo.downloadUrl = uploadInfo.project.beta.upyunBaseUrl + "/" + path;
 //        boolean result = upyun.mkDir(uploadInfo.project.beta.upyunPath, true);
 
