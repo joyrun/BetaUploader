@@ -37,11 +37,11 @@ beta {
     webhook = WEBHOOK
 
 
-    upyunPath=UPYUN_PATH
-    upyunBucketName=UPYUN_BUCKET_NAME
-    upyunUserName=UPYUN_USERNAME
-    upyunPassword=UPYUN_PASSWORD
-    upyunBaseUrl = UPYUN_BASE_URL
+    upyunPath=""
+    upyunBucketName=""
+    upyunUserName=""
+    upyunPassword=""
+    upyunBaseUrl = ""
     uploadName="testApp"
 }
 
