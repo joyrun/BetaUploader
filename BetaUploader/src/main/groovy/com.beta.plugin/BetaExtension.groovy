@@ -24,6 +24,13 @@ public class BetaExtension {
     public String qiniuUploadFileName = null
     public String qiniuBaseUrl = null
 
+    public String upyunPath;
+    public String upyunBucketName;
+    public String upyunUserName;
+    public String upyunPassword;
+    public String upyunBaseUrl = null
+    public String uploadName = null
+
     public String webhook = null
     public String extra = null
 }

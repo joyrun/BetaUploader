@@ -10,7 +10,7 @@ buildscript {
         maven { url "https://jitpack.io" }
     }
     dependencies {
-        classpath 'com.github.joyrun:BetaUploader:1.3.2'
+        classpath 'com.github.joyrun:BetaUploader:1.3.3'
     }
 }
 
@@ -26,15 +26,23 @@ beta {
     title = "悦跑圈_正式版"
 
 
-    qiniuAccessKey = QINIU_ACCESS_KEY
-    qiniuSecretKey = QINIU_SECRET_KEY
-    qiniuBucketName = QINIU_BUCKET_NAME
-    qiniuUploadFileName = "android-" + System.currentTimeMillis()+".apk"
-    qiniuBaseUrl = QINIU_BASE_URL
+//    qiniuAccessKey = QINIU_ACCESS_KEY
+//    qiniuSecretKey = QINIU_SECRET_KEY
+//    qiniuBucketName = QINIU_BUCKET_NAME
+//    qiniuUploadFileName = "android-" + System.currentTimeMillis()+".apk"
+//    qiniuBaseUrl = QINIU_BASE_URL
 
     debugOn = true
 
     webhook = WEBHOOK
+
+
+    upyunPath=UPYUN_PATH
+    upyunBucketName=UPYUN_BUCKET_NAME
+    upyunUserName=UPYUN_USERNAME
+    upyunPassword=UPYUN_PASSWORD
+    upyunBaseUrl = UPYUN_BASE_URL
+    uploadName="testApp"
 }
 
 android {

@@ -5,15 +5,15 @@ apply plugin: 'maven'
 dependencies {
     compile gradleApi()
     compile localGroovy()
-    compile 'com.qiniu:qiniu-java-sdk:7.1.+'
-
+    compile 'com.upyun:java-sdk:4.0.1'
+    compile 'junit:junit:4.12'
 }
 
 repositories {
     mavenCentral()
 }
 group = 'com.github.joyrun'
-version = '1.3.2'
+version = '1.3.3'
 
 uploadArchives {
     repositories {

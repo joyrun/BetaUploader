@@ -1,13 +1,13 @@
 package com.beta.plugin
 
-import com.qiniu.http.Response
-import com.qiniu.storage.UploadManager
-import com.qiniu.util.Auth
+import com.UpYun
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
+
+import java.text.SimpleDateFormat
 
 
 public class BetaPlugin implements Plugin<Project> {
@@ -157,27 +157,37 @@ public class BetaPlugin implements Plugin<Project> {
      */
     public static boolean post(String filePath, UploadInfo uploadInfo) {
         // 上传到七牛云
-        String accessKey = uploadInfo.project.beta.qiniuAccessKey
-        String secretKey = uploadInfo.project.beta.qiniuSecretKey
-        String bucketName = uploadInfo.project.beta.qiniuBucketName
-        String uploadFileName = uploadInfo.project.beta.qiniuUploadFileName
+//        String accessKey = uploadInfo.project.beta.qiniuAccessKey
+//        String secretKey = uploadInfo.project.beta.qiniuSecretKey
+//        String bucketName = uploadInfo.project.beta.qiniuBucketName
+//        String uploadFileName = uploadInfo.project.beta.qiniuUploadFileName
 
-        UploadManager uploadManager = new UploadManager();
-        Auth auth = Auth.create(accessKey, secretKey);
-        String token = auth.uploadToken(bucketName);
-        Response response = uploadManager.put(filePath, uploadFileName, token);
-        uploadInfo.downloadUrl = uploadInfo.project.beta.qiniuBaseUrl + "/" + uploadFileName
-        println "uploadFileName: " + response.toString()
-        println "upload result: " + response.bodyString()
+        UpYun upyun = new UpYun(uploadInfo.project.beta.upyunBucketName, uploadInfo.project.beta.upyunUserName, uploadInfo.project.beta.upyunPassword);
+        upyun.setTimeout(60);
+        upyun.setApiDomain(UpYun.ED_AUTO);
+        String versionName = URLEncoder.encode(uploadInfo.versionName,"utf-8")
+
+        String path = uploadInfo.project.beta.upyunPath+"/"+uploadInfo.project.beta.uploadName+"_"+versionName+"_"+new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date())+".apk";
+        boolean result = upyun.writeFile(path,filePath,true);
+        uploadInfo.downloadUrl = uploadInfo.project.beta.upyunBaseUrl + "/" + path;
+//        boolean result = upyun.mkDir(uploadInfo.project.beta.upyunPath, true);
+
+//        UploadManager uploadManager = new UploadManager();
+//        Auth auth = Auth.create(accessKey, secretKey);
+//        String token = auth.uploadToken(bucketName);
+//        Response response = uploadManager.put(filePath, uploadFileName, token);
+//        uploadInfo.downloadUrl = uploadInfo.project.beta.qiniuBaseUrl + "/" + uploadFileName
+        println "uploadFileName: " + path
+//        println "upload result: " + response.bodyString()
         println "apk download url: " + uploadInfo.downloadUrl
 
-        if (response.statusCode == 200) {
+        if (result) {
             // 调用webhook，告知已经更新版本
             // versionName、versionCode、title、description、extra、
 
             String title = URLEncoder.encode(uploadInfo.title,"utf-8")
             String description = URLEncoder.encode(uploadInfo.description,"utf-8")
-            String versionName = URLEncoder.encode(uploadInfo.versionName,"utf-8")
+//            String versionName = URLEncoder.encode(uploadInfo.versionName,"utf-8")
             String versionCode = URLEncoder.encode(uploadInfo.versionCode,"utf-8")
             String extra = URLEncoder.encode(uploadInfo.extra,"utf-8")
             String downloadUrlUTF8 = URLEncoder.encode(uploadInfo.downloadUrl,"utf-8")
@@ -192,6 +202,7 @@ public class BetaPlugin implements Plugin<Project> {
             println "webhook end: " + response2.body().string()
             return response2.code() == 200;
         } else {
+            println "apk upload error"
             return false
         }
     }
