@@ -37,6 +37,12 @@ project.ext {
     QINIU_BASE_URL = "http://xxx.bkt.clouddn.com"
     WEBHOOK = "http://localhost:8080/uploadBeta"
 
+    UPYUN_PATH="apk"
+    UPYUN_BUCKET_NAME="xxx"
+    UPYUN_USERNAME="xxx"
+    UPYUN_PASSWORD="xxx"
+    UPYUN_BASE_URL="xxx"
+
 }
 task clean(type: Delete) {
     delete rootProject.buildDir
