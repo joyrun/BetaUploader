@@ -208,7 +208,7 @@ public class BetaPlugin implements Plugin<Project> {
     }
 
 
-    private static class UploadInfo {
+    public static class UploadInfo {
         public Project project;
         public String sourceFile = null
         public String title = null
