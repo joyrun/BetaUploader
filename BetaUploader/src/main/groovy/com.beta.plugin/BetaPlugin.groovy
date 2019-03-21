@@ -116,13 +116,15 @@ public class BetaPlugin implements Plugin<Project> {
      */
     private Task createUploadTask(Object variant) {
         String variantName = variant.name.capitalize()
-        Task uploadTask = project.tasks.create("upload${variantName}BetaApkFile") << {
-            // if debug model and debugOn = false no execute upload
-            if (variantName.contains("Debug") && !project.beta.debugOn) {
-                println("JoyrunBetaPlugin: the option debugOn is closed, if you want to upload apk file on debug model, you can set debugOn = true to open it")
-                return
+        Task uploadTask = project.tasks.create("upload${variantName}BetaApkFile") {
+            doLast {
+                // if debug model and debugOn = false no execute upload
+                if (variantName.contains("Debug") && !project.beta.debugOn) {
+                    println("JoyrunBetaPlugin: the option debugOn is closed, if you want to upload apk file on debug model, you can set debugOn = true to open it")
+                    return
+                }
+                uploadApk(generateUploadInfo(variant))
             }
-            uploadApk(generateUploadInfo(variant))
         }
         println("JoyrunBetaPlugin:create upload${variantName}BetaApkFile task")
         return uploadTask
@@ -165,10 +167,10 @@ public class BetaPlugin implements Plugin<Project> {
         UpYun upyun = new UpYun(uploadInfo.project.beta.upyunBucketName, uploadInfo.project.beta.upyunUserName, uploadInfo.project.beta.upyunPassword);
         upyun.setTimeout(60);
         upyun.setApiDomain(UpYun.ED_AUTO);
-        String versionName = URLEncoder.encode(uploadInfo.versionName,"utf-8")
+        String versionName = URLEncoder.encode(uploadInfo.versionName, "utf-8")
 
-        String path = uploadInfo.project.beta.upyunPath+"/"+uploadInfo.project.beta.uploadName+"_"+versionName+"_"+new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date())+".apk";
-        boolean result = upyun.writeFile(path,new File(filePath),true);
+        String path = uploadInfo.project.beta.upyunPath + "/" + uploadInfo.project.beta.uploadName + "_" + versionName + "_" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date()) + ".apk";
+        boolean result = upyun.writeFile(path, new File(filePath), true);
         uploadInfo.downloadUrl = uploadInfo.project.beta.upyunBaseUrl + "/" + path;
 //        boolean result = upyun.mkDir(uploadInfo.project.beta.upyunPath, true);
 
@@ -185,15 +187,15 @@ public class BetaPlugin implements Plugin<Project> {
             // 调用webhook，告知已经更新版本
             // versionName、versionCode、title、description、extra、
 
-            String title = URLEncoder.encode(uploadInfo.title,"utf-8")
-            String description = URLEncoder.encode(uploadInfo.description,"utf-8")
+            String title = URLEncoder.encode(uploadInfo.title, "utf-8")
+            String description = URLEncoder.encode(uploadInfo.description, "utf-8")
 //            String versionName = URLEncoder.encode(uploadInfo.versionName,"utf-8")
-            String versionCode = URLEncoder.encode(uploadInfo.versionCode,"utf-8")
-            String extra = URLEncoder.encode(uploadInfo.extra,"utf-8")
-            String downloadUrlUTF8 = URLEncoder.encode(uploadInfo.downloadUrl,"utf-8")
+            String versionCode = URLEncoder.encode(uploadInfo.versionCode, "utf-8")
+            String extra = URLEncoder.encode(uploadInfo.extra, "utf-8")
+            String downloadUrlUTF8 = URLEncoder.encode(uploadInfo.downloadUrl, "utf-8")
 
             OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
-            String url = String.format("%s?title=%s&description=%s&versionName=%s&versionCode=%s&extra=%s&downloadUrl=%s&platform=1",uploadInfo.project.beta.webhook,title,description,versionName,versionCode,extra,downloadUrlUTF8)
+            String url = String.format("%s?title=%s&description=%s&versionName=%s&versionCode=%s&extra=%s&downloadUrl=%s&platform=1", uploadInfo.project.beta.webhook, title, description, versionName, versionCode, extra, downloadUrlUTF8)
             Request.Builder builder = new Request.Builder().url(url).get();
             println "webhook info: " + uploadInfo.toString()
             println "webhook start: " + url
